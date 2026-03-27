@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virginia Contractor A/B Exam Simulator</title>
+  <meta name="description" content="Simulador simple, oscuro y rápido para el examen de negocios Class A / Class B de contratistas de Virginia." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero card">
+      <div>
+        <p class="eyebrow">Virginia Contractor Business Exam</p>
+        <h1>Simulador Class A / Class B</h1>
+        <p class="lead">
+          Banco amplio, aleatorio y bilingüe <strong>English + Español</strong>, con temporizador y revisión final de respuestas correctas.
+        </p>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">Dark only</span>
+        <span class="badge">Simple</span>
+        <span class="badge">Fast</span>
+        <span class="badge">A y B</span>
+      </div>
+    </header>
+
+    <section class="grid-top">
+      <section class="card">
+        <h2>Formato objetivo</h2>
+        <div class="format-list">
+          <article class="format-item">
+            <h3>Parte 1: Virginia</h3>
+            <p>24 preguntas · 48 min · mínimo 75%</p>
+          </article>
+          <article class="format-item">
+            <h3>Parte 2: Preguntas generales</h3>
+            <p>50 preguntas · 100 min · mínimo 70%</p>
+          </article>
+          <article class="format-item">
+            <h3>Parte 3: Preguntas avanzadas</h3>
+            <p>24 preguntas · 60 min · mínimo 70%</p>
+          </article>
+        </div>
+        <div class="totals">
+          <div><strong>Class A:</strong> 98 preguntas · 208 min</div>
+          <div><strong>Class B:</strong> 74 preguntas · 148 min</div>
+        </div>
+      </section>
+
+      <section class="card controls">
+        <h2>Iniciar simulación</h2>
+        <p class="muted">
+          La selección es aleatoria desde el banco cargado. Las respuestas correctas y sus explicaciones aparecen al final.
+        </p>
+        <div class="class-buttons">
+          <button id="class-a-btn" class="class-btn active" data-class="A" type="button">Class A</button>
+          <button id="class-b-btn" class="class-btn" data-class="B" type="button">Class B</button>
+        </div>
+        <button id="start-btn" class="primary-btn" type="button">Comenzar examen aleatorio</button>
+        <button id="restart-btn" class="secondary-btn hidden" type="button">Generar otro examen aleatorio</button>
+
+        <div class="bank-box">
+          <div><strong>Archivo editable del banco:</strong> <code>data/question-bank.json</code></div>
+          <div id="bank-stats" class="muted">Cargando banco…</div>
+        </div>
+      </section>
+    </section>
+
+    <section class="card note-card">
+      <h2>Importante</h2>
+      <p>
+        Este simulador usa <strong>preguntas originales de práctica</strong> basadas en el esquema público del examen y en materiales de referencia públicos/permitidos.
+        No son preguntas oficiales copiadas literalmente del examen ni de libros protegidos.
+      </p>
+      <p class="muted">
+        Si luego quieres ampliar el banco, agrega más objetos dentro de <code>data/question-bank.json</code> siguiendo la misma estructura.
+      </p>
+    </section>
+
+    <section id="exam-shell" class="hidden">
+      <section class="card status-card">
+        <div class="status-row">
+          <div>
+            <div class="mini-label">Modo</div>
+            <div id="status-mode" class="status-value">Class A</div>
+          </div>
+          <div>
+            <div class="mini-label">Parte actual</div>
+            <div id="status-section" class="status-value">Parte 1</div>
+          </div>
+          <div>
+            <div class="mini-label">Pregunta</div>
+            <div id="status-progress" class="status-value">1 / 24</div>
+          </div>
+          <div>
+            <div class="mini-label">Tiempo parte</div>
+            <div id="status-timer-section" class="status-value timer">48:00</div>
+          </div>
+          <div>
+            <div class="mini-label">Tiempo total</div>
+            <div id="status-timer-total" class="status-value timer">208:00</div>
+          </div>
+        </div>
+        <div class="progress-line">
+          <div id="progress-bar"></div>
+        </div>
+      </section>
+
+      <section class="card question-card">
+        <div class="question-meta">
+          <span id="question-category" class="pill">Category</span>
+          <span id="question-source" class="pill ghost">Source</span>
+        </div>
+        <h2 id="question-en" class="question-title">Question in English</h2>
+        <p id="question-es" class="question-translation">Traducción al español</p>
+
+        <div id="options" class="options"></div>
+
+        <div class="nav-row">
+          <button id="prev-btn" class="secondary-btn" type="button">Anterior</button>
+          <button id="next-btn" class="secondary-btn" type="button">Siguiente</button>
+          <button id="finish-section-btn" class="primary-btn" type="button">Terminar parte actual</button>
+        </div>
+        <p id="exam-hint" class="muted">
+          Puedes navegar entre preguntas de la parte actual. Las no respondidas contarán como incorrectas al cerrar la parte o al agotarse el tiempo.
+        </p>
+      </section>
+    </section>
+
+    <section id="results-shell" class="hidden card">
+      <div class="results-head">
+        <div>
+          <p class="eyebrow">Resultado</p>
+          <h2 id="result-title">Resumen final</h2>
+        </div>
+        <div id="result-badge" class="result-badge">APROBADO</div>
+      </div>
+
+      <div id="section-summary" class="summary-grid"></div>
+
+      <div class="review-head">
+        <h3>Revisión detallada</h3>
+        <p class="muted">
+          Aquí ves la respuesta correcta y por qué es correcta, en inglés y en español.
+        </p>
+      </div>
+
+      <div id="review-sections"></div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
