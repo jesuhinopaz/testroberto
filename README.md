@@ -1,59 +1,75 @@
-# Virginia Contractor Class A / B Exam Simulator
+# Banco mega bilingüe para Virginia Contractor Class A / Class B
 
-## Qué es
-Versión simplificada y rápida, solo enfocada en preguntas del examen de negocios de contratista de Virginia para **Class A** y **Class B**.
+## Qué incluye
+- `data/question-bank.json` → archivo principal para usar directamente en tu web
+- `data/question-bank.csv` → versión editable en Excel o CSV editor
 
-## Archivos principales
-- `index.html` → la página principal
-- `styles.css` → todo el estilo oscuro fijo
-- `app.js` → lógica del simulador, temporizador y aleatorización
-- `data/question-bank.json` → **aquí están las preguntas**
+## Tamaño del banco
+- Total de preguntas: **950**
+- Parte 1 Virginia: **180**
+- Parte 2 General: **487**
+- Parte 3 Advanced: **283**
 
-## Dónde aumentar preguntas
-Edita este archivo:
+## Dónde editar
+El archivo que debes ampliar en el futuro es:
 
 `data/question-bank.json`
 
-Dentro verás la propiedad:
+Si tu app ya lee `data/question-bank.json`, puedes reemplazar el archivo viejo por este.
 
-`questions`
+## Estructura de cada pregunta
+Cada pregunta tiene estas claves:
+- `id`
+- `section`
+- `category`
+- `topicEn`
+- `topicEs`
+- `difficulty`
+- `source`
+- `questionEn`
+- `questionEs`
+- `options`
+- `correctKey`
+- `explanationEn`
+- `explanationEs`
 
-Cada pregunta sigue esta estructura:
+## Reglas para agregar más preguntas
+1. Mantén exactamente **4 opciones**.
+2. Las opciones deben usar las claves `A`, `B`, `C`, `D`.
+3. `correctKey` debe apuntar a una de esas cuatro letras.
+4. `section` debe ser:
+   - `1` para Virginia
+   - `2` para General
+   - `3` para Advanced
+5. Escribe siempre:
+   - pregunta en inglés
+   - pregunta en español
+   - explicación en inglés
+   - explicación en español
 
+## Ejemplo mínimo
 ```json
 {
-  "id": "S1-01-1",
-  "section": 1,
-  "category": "Regulation of Contractors",
-  "topicEn": "Contractor licensing",
-  "topicEs": "La licencia de contratistas",
-  "difficulty": "easy",
-  "source": "DPOR / Board for Contractors",
-  "questionEn": "Which statement is most accurate about contractor licensing?",
-  "questionEs": "¿Cuál afirmación es más precisa sobre la licencia de contratistas?",
+  "id": "Q2-0951",
+  "section": 2,
+  "category": "Estimating and Bidding",
+  "topicEn": "Allowances",
+  "topicEs": "las partidas allowance",
+  "difficulty": "medium",
+  "source": "Original practice",
+  "questionEn": "Which statement is most accurate about allowances?",
+  "questionEs": "¿Qué afirmación es más precisa sobre las partidas allowance?",
   "options": [
-    { "key": "A", "textEn": "...", "textEs": "..." },
-    { "key": "B", "textEn": "...", "textEs": "..." },
-    { "key": "C", "textEn": "...", "textEs": "..." },
-    { "key": "D", "textEn": "...", "textEs": "..." }
+    {"key": "A", "textEn": "Correct answer in English", "textEs": "Respuesta correcta en español"},
+    {"key": "B", "textEn": "Wrong answer 1", "textEs": "Respuesta incorrecta 1"},
+    {"key": "C", "textEn": "Wrong answer 2", "textEs": "Respuesta incorrecta 2"},
+    {"key": "D", "textEn": "Wrong answer 3", "textEs": "Respuesta incorrecta 3"}
   ],
-  "correctKey": "C",
-  "explanationEn": "Why it is correct...",
-  "explanationEs": "Por qué es correcta..."
+  "correctKey": "A",
+  "explanationEn": "Explain why A is correct.",
+  "explanationEs": "Explica por qué A es correcta."
 }
 ```
 
-## Reglas importantes al agregar preguntas
-- `section`:
-  - `1` = Parte 1 Virginia
-  - `2` = Parte 2 General
-  - `3` = Parte 3 Advanced
-- `correctKey` debe coincidir con una de las opciones.
-- Mantén siempre 4 opciones por pregunta para que el simulador se vea uniforme.
-- Puedes duplicar una pregunta existente y editarla.
-
-## Cómo subirlo a tu web
-Sube toda la carpeta tal como está a tu hosting o repositorio GitHub Pages.
-
-## Nota
-Las preguntas de este banco son **originales de práctica** y editables. No son una copia literal del examen oficial ni de libros protegidos.
+## Nota importante
+Este banco es **original** y está hecho para estudio realista. No es una copia textual de preguntas oficiales ni de libros con copyright.
