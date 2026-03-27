@@ -1,131 +1,59 @@
-# BuilderPrep Pro — static deployable starter
+# Virginia Contractor Class A / B Exam Simulator
 
-This package is a **direct-upload, static, offline-friendly web app starter** for a contractor-license study platform.
+## Qué es
+Versión simplificada y rápida, solo enfocada en preguntas del examen de negocios de contratista de Virginia para **Class A** y **Class B**.
 
-It was built from your product specification for a serious exam-prep system with:
+## Archivos principales
+- `index.html` → la página principal
+- `styles.css` → todo el estilo oscuro fijo
+- `app.js` → lógica del simulador, temporizador y aleatorización
+- `data/question-bank.json` → **aquí están las preguntas**
 
-- study mode
-- exam mode with timer
-- smart review queue
-- favorites and review-later lists
-- progress tracking
-- multi-license data structure
-- admin import/export
-- installable PWA shell
-- offline cache
-- English / Spanish UI toggle
+## Dónde aumentar preguntas
+Edita este archivo:
 
-## What is included right now
+`data/question-bank.json`
 
-### Fully working in this starter
-- Static SPA that you can upload directly to a web host
-- Local profile storage
-- Local progress persistence
-- Question bank from JSON seed data
-- Import questions from JSON/CSV
-- Export question bank
-- Export/import full backup
-- Study mode
-- Timed exam mode
-- Review center
-- Progress analytics (local)
-- PWA manifest + service worker
+Dentro verás la propiedad:
 
-### Prepared but still local-only
-- User accounts are local profile fields, not real server auth yet
-- Sync is local-first; cloud sync is not connected yet
-- Admin panel writes to local browser storage, not a server database
-- Ranking is local gamification, not global leaderboard
+`questions`
 
-## Folder structure
+Cada pregunta sigue esta estructura:
 
-```text
-builderprep-pro/
-├─ index.html
-├─ styles.css
-├─ manifest.webmanifest
-├─ service-worker.js
-├─ README.md
-├─ assets/
-│  ├─ icon.svg
-│  ├─ icon-192.png
-│  └─ icon-512.png
-├─ data/
-│  └─ seed.json
-└─ js/
-   ├─ app.js
-   ├─ constants.js
-   ├─ logic.js
-   ├─ storage.js
-   └─ views.js
+```json
+{
+  "id": "S1-01-1",
+  "section": 1,
+  "category": "Regulation of Contractors",
+  "topicEn": "Contractor licensing",
+  "topicEs": "La licencia de contratistas",
+  "difficulty": "easy",
+  "source": "DPOR / Board for Contractors",
+  "questionEn": "Which statement is most accurate about contractor licensing?",
+  "questionEs": "¿Cuál afirmación es más precisa sobre la licencia de contratistas?",
+  "options": [
+    { "key": "A", "textEn": "...", "textEs": "..." },
+    { "key": "B", "textEn": "...", "textEs": "..." },
+    { "key": "C", "textEn": "...", "textEs": "..." },
+    { "key": "D", "textEn": "...", "textEs": "..." }
+  ],
+  "correctKey": "C",
+  "explanationEn": "Why it is correct...",
+  "explanationEs": "Por qué es correcta..."
+}
 ```
 
-## How to upload it to your website
+## Reglas importantes al agregar preguntas
+- `section`:
+  - `1` = Parte 1 Virginia
+  - `2` = Parte 2 General
+  - `3` = Parte 3 Advanced
+- `correctKey` debe coincidir con una de las opciones.
+- Mantén siempre 4 opciones por pregunta para que el simulador se vea uniforme.
+- Puedes duplicar una pregunta existente y editarla.
 
-### Option 1 — simple shared hosting / cPanel
-1. Unzip the project.
-2. Upload **all files and folders** to your public web folder:
-   - `public_html/`
-   - or your domain root
-3. Make sure the folder structure stays intact.
-4. Visit your domain.
+## Cómo subirlo a tu web
+Sube toda la carpeta tal como está a tu hosting o repositorio GitHub Pages.
 
-### Option 2 — local testing on Windows
-Because this app uses modules and a service worker, test it with a local web server instead of double-clicking the HTML file.
-
-#### Python
-```bash
-python -m http.server 8080
-```
-Then open:
-```text
-http://localhost:8080
-```
-
-#### VS Code Live Server
-You can also open the folder in VS Code and run **Live Server**.
-
-## Import format
-
-### JSON
-You can import either:
-- an array of questions
-- or an object with a `questions` array
-
-### CSV
-Recommended columns:
-
-```text
-licenseId,examId,category,topic,difficulty,question_en,question_es,answerA_en,answerB_en,answerC_en,answerD_en,correctAnswerId,explanation_en,explanation_es,tags
-```
-
-`tags` should be comma-separated.
-
-## Recommended next upgrade path
-
-If you want the **full production architecture** later, the clean migration path from this starter is:
-
-1. Keep this UI and data model as the UX reference.
-2. Move question storage from browser/localStorage to PostgreSQL.
-3. Add a real backend with:
-   - Next.js / NestJS / Supabase
-   - PostgreSQL
-   - role-based auth
-   - cloud sync
-4. Replace local admin writes with protected admin API endpoints.
-5. Replace local analytics with server analytics.
-6. Move large local banks to IndexedDB or server-paginated APIs.
-
-## Important note
-
-This version is intentionally designed to be **deployable immediately** on basic hosting, without a build step.
-That makes it easy to upload now.
-
-If you want, the next phase can be a **professional React + TypeScript + Vite/Next.js codebase** with:
-- real auth
-- database
-- server sync
-- admin roles
-- analytics backend
-- spaced repetition service
-- production deployment pipeline
+## Nota
+Las preguntas de este banco son **originales de práctica** y editables. No son una copia literal del examen oficial ni de libros protegidos.
